@@ -259,6 +259,15 @@ describe "Capifony::Symfony2 - symfony" do
     it { should have_run(' sh -c \'cd /var/www/releases/20120927 && SYMFONY_ENV=prod my_composer install --no-dev --verbose --prefer-dist --optimize-autoloader --no-progress\'') }
   end
 
+  context "when running symfony:composer:install with a given composer_release" do
+    before do
+      @configuration.set :composer_release, "1.0.0-alpha8"
+      @configuration.find_and_execute_task('symfony:composer:install')
+    end
+
+    it { should have_run(' sh -c \'cd /var/www/releases/20120927 && php composer.phar self-update 1.0.0-alpha8\'') }
+  end
+
   context "when running symfony:composer:install with enabled copy_vendors" do
     before do
       @configuration.set :copy_vendors, true
